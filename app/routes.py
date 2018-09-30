@@ -10,7 +10,7 @@ def index():
         '''
         url = "http://api.petfinder.com/pet.find"
         query_string = {
-            "key": "24d0c266ca968b5b62cebb15a71e8693",
+            "key": "API_KEY",
             "animal": "dog",
             "format": "json",
             "location": "new york city, ny",
