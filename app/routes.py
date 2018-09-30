@@ -38,6 +38,7 @@ def index():
         }
         response = requests.get(url, params=query_string)
         data = response.json()['petfinder']['pets']['pet'] # array of pets
+        #data = response['petfinder']
         url_dict = {}
         for i in range(len(data)):
             try:
