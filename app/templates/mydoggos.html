@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>My Doggos!</title>
+  </head>
+  <body>
+    <div>
+      {% block content %}
+        {% for dog in list %}
+        <a href=dog[2]><img src=dog[1]
+          alt=dog[0]
+          width="72" height="46" border="0" /></a>
+         <span>dog[0]</span>
+        {% endfor %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
