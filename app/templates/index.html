@@ -2,29 +2,68 @@
 <html>
 <head>
 	<title>Pawfect Match</title>
+	<link rel="stylesheet" href="../static/bootstrap.min.css">
+	<script src="../static/bootstrap.min.js"></script>
+	<link href="../static/cover.css" rel="stylesheet">
+	<style>
+	html, body {
+  background: url(static/puppo2.jpg) no-repeat center center fixed !important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+	</style>
 </head>
-<body>
-	<h1>Welcome! Find your perfect dog doppelganger</h1>
+<body class="text-center">
+<!-- Navbar -->
+	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+		<header class="masthead mb-auto">
+			<div class="inner">
+				<h3 class="masthead-brand">PawfectMatch</h3>
+				<nav class="nav nav-masthead justify-content-center">
+					<a class="nav-link active" href="#">Home</a>
+				</nav>
+			</div>
+		</header>
+
+		<main role="main" class="inner cover">
+			<h1 class="cover-heading">Welcome to PawfectMatch!</h1>
+			<p class="lead">Find your perfect dog doppleganger :)</p>
+		</main>
+
+<div class="form-group">
 	<form method="POST" enctype=multipart/form-data>
-		<input type="text" placeholder="New York, NY" name="location">
-		<select name="size">
+		<input type="text" placeholder="New York, NY" name="location" class="form-group">
+		<select name="size" class="form-group">
   			<option value="S">Small</option>
   			<option value="M">Medium</option>
   			<option value="L">Large</option>
   			<option value="Xl">X-Large</option>
 	  	</select>
-		<select name="sex">
+		<select name="sex" class="form-group">
   			<option value="M">Male</option>
   			<option value="F">Female</option>
 	  	</select>
-	  	<select name="age">
+	  	<select name="age" class="form-group">
   			<option value="Baby">Baby</option>
   			<option value="Young">Young</option>
   			<option value="Adult">Adult</option>
   			<option value="Senior">Senior</option>
 	  	</select>
-	  	<input type="file" name="doggo" accept="image/*" />
-	  	<input type="submit">
+	  	<input type="file" name="doggo" accept="image/*" class="form-group"/>
+	  	<input class="form-group" type="submit">
 	</form>
+</div>
+
+	<footer class="mastfoot mt-auto">
+		<div class="inner">
+			<p>Created by Erin, Michael, Silvena, & Tommi at HackNY Fall 2018 Hackathon</p>
+		</div>
+	</footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 </body>
 </html>
