@@ -9,10 +9,8 @@ def build_tree(vec_dict):
         index_to_id[i] = unique_id
     return KDTree(vec_list), index_to_id
 
-tree, index_to_id = build_tree(vecs)
-
 # k = num neighbors
-def query(vector, k):
+def query(vector, k, tree, index_to_id):
     try:
         _, indices = tree.query(vector, k)
     except ValueError:
