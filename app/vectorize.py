@@ -12,7 +12,7 @@ def get_images(url_dict):
     def get(url):
         response = requests.get(url)
         temp = Image.open(BytesIO(response.content))
-        img = temp.copy() #.resize((224,224))
+        img = temp.copy().resize((224,224))
         temp.close()
         return img
 

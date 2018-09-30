@@ -45,7 +45,7 @@ def index():
         url_dict = {}
         for i in range(len(data)):
             try:
-                url_dict[data[i]['id']['$t']] = data[i]['media']['photos']['photo'][1]['$t']
+                url_dict[data[i]['id']['$t']] = data[i]['media']['photos']['photo'][3]['$t']
             except:
                 print(i)
 
