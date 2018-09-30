@@ -37,13 +37,18 @@ def index():
             "output": "basic"
         }
         response = requests.get(url, params=query_string)
-        data = response.json()['petfinder']['pets']['pet'] # array of pets
+        try:
+            data = response.json()['petfinder']['pets']['pet'] # array of pets
+        except KeyError:
+            return "No Results Found"
+
         url_dict = {}
         for i in range(len(data)):
             try:
                 url_dict[data[i]['id']['$t']] = data[i]['media']['photos']['photo'][0]['$t']
             except:
                 print(i)
+
         dog_img = request.files['doggo'].read()
         temp = Image.open(BytesIO(dog_img))
         img = temp.copy().resize((224,224))
