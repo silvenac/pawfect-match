@@ -112,6 +112,10 @@ def mydoggos():
             no_punct_shelter_name =  re.sub(' +', ' ', no_punct_shelter_name)
             no_punct_shelter_name = no_punct_shelter_name.replace(' ', '-')
 
+        except KeyError as e:
+            print(e)
+            return render_template('mydoggos.html', list=[])
+
         except Exception as e:
             print("Error", e)
 
