@@ -5,7 +5,7 @@
 </head>
 <body>
 	<h1>Welcome! Find your perfect dog doppelganger</h1>
-	<form method="POST">
+	<form method="POST" enctype=multipart/form-data>
 		<input type="text" placeholder="New York, NY" name="location">
 		<select name="size">
   			<option value="S">Small</option>
@@ -23,6 +23,7 @@
   			<option value="Adult">Adult</option>
   			<option value="Senior">Senior</option>
 	  	</select>
+	  	<input type="file" name="doggo" accept="image/*" />
 	  	<input type="submit">
 	</form>
 </body>

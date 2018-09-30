@@ -28,11 +28,8 @@ def get_images(url_dict):
                 print(e)
     return results
 
-def get_vectors(url_dict):
+def get_vectors(url_dict, model):
     image_dict = get_images(url_dict)
-    if 'model' not in globals():
-        model = MobileNet(input_shape=(224,224,3), include_top=False, weights='imagenet', pooling='avg')
-
     results = dict()
     for unique_id, img in image_dict.items():
         x = image.img_to_array(img)
@@ -41,3 +38,10 @@ def get_vectors(url_dict):
         vector = model.predict(x)
         results[unique_id] = vector
     return results
+
+def get_vector(img, model):
+    x = image.img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    x = preprocess_input(x)
+    return model.predict(x)
+

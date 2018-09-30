@@ -2,10 +2,24 @@ from flask import render_template
 from flask import request
 from app import app
 import requests
+from PIL import Image
+from io import BytesIO
+from keras.preprocessing import image
+from keras.applications.mobilenet import MobileNet, preprocess_input
+from vectorize import get_vectors, get_vector
+from knn import build_tree, query
 import string
 import re
 
-API_KEY = "111"
+
+global model
+
+model = MobileNet(input_shape=(224,224,3), include_top=False, weights='imagenet', pooling='avg')
+
+API_KEY = "24d0c266ca968b5b62cebb15a71e8693"
+
+if 'model' not in globals():
+    print('yikes')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -30,7 +44,16 @@ def index():
                 url_dict[data[i]['id']['$t']] = data[i]['media']['photos']['photo'][0]['$t']
             except:
                 print(i)
-        print(url_dict)
+        dog_img = request.files['doggo'].read()
+        temp = Image.open(BytesIO(dog_img))
+        img = temp.copy().resize((224,224))
+        # temp.close()
+        petfinder_vector = get_vectors(url_dict, model)
+        user_img = get_vector(img, model)
+        print(petfinder_vector, user_img)
+        #tree, index_to_id = build_tree(petfinder_vector)
+        #most_similar_dogs = query(build, 5, tree, index_to_id)
+        #print(most_similar_dogs)
         return "hello"
     return render_template('index.html')
 
