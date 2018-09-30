@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import request, session, redirect, url_for
+from flask import request, session, redirect, url_for, flash
 from app import app
 import requests
 from PIL import Image
@@ -21,6 +21,7 @@ if 'model' not in globals():
     print('yikes')
 
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         url = "http://api.petfinder.com/pet.find"
@@ -114,7 +115,8 @@ def mydoggos():
 
         except KeyError as e:
             print(e)
-            return render_template('mydoggos.html', list=[])
+            flash('No matches, please try again!')
+            return redirect(url_for('index'))
 
         except Exception as e:
             print("Error", e)
