@@ -1,16 +1,15 @@
 from flask import render_template
-from flask import request
+from flask import request, session, redirect, url_for
 from app import app
 import requests
 from PIL import Image
 from io import BytesIO
 from keras.preprocessing import image
 from keras.applications.mobilenet import MobileNet, preprocess_input
-from vectorize import get_vectors, get_vector
-from knn import build_tree, query
+from .vectorize import get_vectors, get_vector
+from .knn import build_tree, query
 import string
 import re
-
 
 global model
 
@@ -50,11 +49,12 @@ def index():
         # temp.close()
         petfinder_vector = get_vectors(url_dict, model)
         user_img = get_vector(img, model)
-        print(petfinder_vector, user_img)
-        #tree, index_to_id = build_tree(petfinder_vector)
-        #most_similar_dogs = query(build, 5, tree, index_to_id)
-        #print(most_similar_dogs)
-        return "hello"
+        # print(petfinder_vector, user_img)
+        tree, index_to_id = build_tree(petfinder_vector)
+        most_similar_dogs = query(user_img, 5, tree, index_to_id)
+        print(most_similar_dogs)
+        session['most_similar_dogs'] = most_similar_dogs
+        return redirect(url_for('mydoggos'))
     return render_template('index.html')
 
 @app.route('/mydoggos', methods=['GET', 'POST'])
@@ -65,7 +65,8 @@ def mydoggos():
 
     dog_list = [] #[[dog_name, photo, url], [...], ...]
 
-    id_list=[36974356] #TODO PLACEHOLDER FOR REAL LIST
+
+    id_list = session.get('most_similar_dogs', None)
 
     for id in id_list:
         query_string = {
@@ -73,7 +74,7 @@ def mydoggos():
             "format": "json",
             "id": id
         }
-        
+
         response = requests.get(url, params=query_string)
         try:
             # get info from JSON object returned by API
@@ -111,8 +112,8 @@ def mydoggos():
             no_punct_shelter_name =  re.sub(' +', ' ', no_punct_shelter_name)
             no_punct_shelter_name = no_punct_shelter_name.replace(' ', '-')
 
-        except:
-            print("Error")
+        except Exception as e:
+            print("Error", e)
 
         this_url = base_url + '/' + no_punct_dog_name + '-' + dog_id + '/' + \
                 no_punct_state + '/' + no_punct_city + '/' + no_punct_shelter_name + \
@@ -122,4 +123,4 @@ def mydoggos():
         this_list = [dog_name, photo, this_url]
         dog_list.append(this_list)
 
-        return render_template('mydoggos.html', list=dog_list)
+    return render_template('mydoggos.html', list=dog_list)
