@@ -76,10 +76,12 @@ def mydoggos():
             "id": id
         }
 
-        response = requests.get(url, params=query_string)
+        response = requests.get(url, params=query_string).json()
+        if(response['petfinder'].get('header')):
+                continue
         try:
             # get info from JSON object returned by API
-            data = response.json()['petfinder']['pet'] # array of pets
+            data = response['petfinder']['pet'] # array of pets
             dog_name = data['name']['$t']
             dog_id = data['id']['$t']
             state = data['contact']['state']['$t']
