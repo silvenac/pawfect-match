@@ -14,5 +14,4 @@ COPY Pipfile.lock /pawfect/
 WORKDIR /pawfect/
 RUN pipenv install --deploy --system
 
-# CMD ["flask", "run"]
-CMD ["/bin/sh"]
+CMD ["flask", "run"]
