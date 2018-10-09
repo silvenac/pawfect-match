@@ -13,5 +13,7 @@ COPY Pipfile.lock /pawfect/
 
 WORKDIR /pawfect/
 RUN pipenv install --deploy --system
+WORKDIR /pawfect/site
+EXPOSE 5000
 
-CMD ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0"]
